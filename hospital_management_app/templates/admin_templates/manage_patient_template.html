@@ -1,0 +1,344 @@
+{% extends 'admin_templates/base_template.html' %}
+
+{% block page_title %}
+    &nbsp Manage Patients
+{% endblock page_title %}
+
+
+{% block custom_css %}
+    <style>
+        .table tbody tr td {
+            vertical-align: middle;
+        }
+
+    </style>
+
+{% endblock %}
+
+
+{% block main_content %}
+
+    {% load static %}
+
+    <section class="content">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title" style="padding-top: 4px">Patients Details</h4>&nbsp&nbsp
+                            <a class="btn btn-outline-primary btn-sm " href="{% url "add_patient" %}" role="button">+
+                                Add Patient</a>
+
+                            <div class="card-tools">
+
+                                {% csrf_token %}
+                                <form method='get' action="{% url 'patient_search' %} ">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="q" class="form-control float-right"
+                                               placeholder="Search">
+
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap ">
+                                <thead>
+                                <tr class="text-center">
+
+                                    {#                                    <th>ID</th>#}
+                                    <th>Firstname</th>
+                                    <th>Lastname</th>
+                                    <th>Email</th>
+
+                                    <th>Age</th>
+                                    <th>Address</th>
+                                    <th>Contact_number</th>
+                                    <th>Ctime</th>
+                                    <th>Operation</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for patient in page_obj %}
+                                    <tr class="text-center">
+                                        {#                                        <td>{{ patient.id }}</td>#}
+                                        {#                                <td>{{ staff.admin.first_name }}</td>#}
+                                        {#                                <td>{{ staff.admin.last_name }}</td>#}
+                                        {#                                <td>{{ staff.admin.username }}</td>#}
+                                        {#                                <td>{{ staff.admin.email }}</td>#}
+                                        <td>{{ patient.admin.first_name }}</td>
+                                        <td>{{ patient.admin.last_name }}</td>
+                                        <td>{{ patient.admin.email }}</td>
+
+
+
+                                        <td>{{ patient.age }}</td>
+                                        <td>{{ patient.address }}</td>
+                                        <td>{{ patient.contact_number }}</td>
+                                        <td>{{ patient.created_at }}</td>
+                                        {#                                <td>{{ staff.admin.last_login }}</td>#}
+                                        {#                                <td>{{ staff.admin.date_joined }}</td>#}
+                                        <td>
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal"
+                                                    username="{{ patient.admin.username }}"
+                                                    email="{{ patient.admin.email }}"
+                                                    contact_number="{{ patient.contact_number }}"
+                                                    last_name="{{ patient.admin.last_name }}"
+                                                    first_name="{{ patient.admin.first_name }}"
+                                                    age="{{ patient.age }}"
+                                                    address="{{ patient.address }}"
+                                                    patient_id= {{ patient.admin.id }}>
+                                                Edit
+                                            </button>
+                                            {#  <a href="{% url 'edit_patient' patient.admin.id %}" class="btn btn-success">Edit</a>#}
+                                            <a href="{% url 'delete_patient' patient.admin.id %}"
+                                               class="btn btn-danger">Delete</a>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                <!-- Button trigger modal -->
+
+
+                                <!-- Modal -->
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                <div align="center">
+                    {% if is_paginated %}
+                        <nav aria-label="Score pagination" class="mb-4" style="">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Previous</span>
+                                    </li>
+                                {% endif %}
+                                <!--首页-->
+                                {% if page_obj.number == 1 %}
+                                    <li class="page-item active">
+                        <span class="page-link">
+                            {{ page_obj.number }}
+                            <span class="sr-only">(current)</span>
+                        </span>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1">1</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for page_num in paginator.page_range %}
+                                    {% if page_num != 1 and page_num != paginator.num_pages %}
+
+                                        {% if page_obj.number == page_num %}
+                                            <li class="page-item active">
+                            <span class="page-link">
+                                {{ page_num }}
+                                <span class="sr-only">(current)</span>
+                            </span>
+                                            </li>
+                                            <!--向前三页-->
+                                        {% elif page_obj.number|add:-3 == page_num %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                            </li>
+                                        {% elif page_obj.number|add:-2 == page_num %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                            </li>
+                                        {% elif page_obj.number|add:-1 == page_num %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                            </li>
+                                            <!--向后三页-->
+                                        {% elif page_obj.number|add:3 == page_num %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                            </li>
+                                        {% elif page_obj.number|add:2 == page_num %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                            </li>
+                                        {% elif page_obj.number|add:1 == page_num %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                <!--最后一页-->
+                                <li class="page-item">
+                        <span class="page-link">
+                            ...
+                        </span>
+                                </li>
+                                {% if page_obj.number == paginator.num_pages %}
+                                    <li class="page-item active">
+                        <span class="page-link">
+                            {{ paginator.num_pages }}
+                            <span class="sr-only">(current)</span>
+                        </span>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+                                    </li>
+                                {% endif %}
+
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Next</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                </div>
+
+
+
+
+
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id='edit_patient_form' method="POST" action="{% url 'edit_patient_save' %}">
+                                        {% csrf_token %}
+                                        <div class="mb-2">
+                                            <label for="message-text" class="col-form-label">Username:</label>
+                                            <input type="text" class="form-control" id="modalBodyInput_username"
+                                                   name="username">
+                                            <input type="hidden" class="form-control" name="patient_id"
+                                                   id="patient_hidden_input"
+                                                   value="{{ patient.admin.id }}">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="recipient-name" class="col-form-label">Email:</label>
+                                            <input type="text" class="form-control" id="modalBodyInput_email"
+                                                   name="email">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="message-text" class="col-form-label">Contact Number:</label>
+                                            <input type="text" class="form-control" id="modalBodyInput_contact_number"
+                                                   name="contact_number">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="message-text" class="col-form-label">Last Name:</label>
+                                            <input type="text" class="form-control" id="modalBodyInput_last_name"
+                                                   name="last_name">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="message-text" class="col-form-label">First Name:</label>
+                                            <input type="text" class="form-control" id="modalBodyInput_first_name"
+                                                   name="first_name">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="message-text" class="col-form-label">age</label>
+                                            <input type="text" class="form-control" id="modalBodyInput_age" name="age">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="message-text" class="col-form-label">address</label>
+                                            <input type="text" class="form-control" id="modalBodyInput_address"
+                                                   name="address">
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" form='edit_patient_form' class="btn btn-primary">Update
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+    <script>
+
+        const exampleModal = document.getElementById('exampleModal')
+        console.log("yes")
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const username = button.getAttribute('username')
+            const email = button.getAttribute('email')
+            const contact_number = button.getAttribute('contact_number')
+            const last_name = button.getAttribute('last_name')
+            const first_name = button.getAttribute('first_name')
+            const age = button.getAttribute('age')
+            const address = button.getAttribute('address')
+            const id = button.getAttribute('patient_id')
+            // If necessary, you could initiate an AJAX request here
+            // and then do the updating in a callback.
+            //
+            // Update the modal's content.
+            const modalTitle = exampleModal.querySelector('.modal-title')
+            const modalBodyInput_email = document.getElementById('modalBodyInput_email')
+            const modalBodyInput_contact_number = document.getElementById('modalBodyInput_contact_number')
+            const modalBodyInput_username = document.getElementById('modalBodyInput_username')
+            const modalBodyInput_last_name = document.getElementById('modalBodyInput_last_name')
+            const modalBodyInput_first_name = document.getElementById('modalBodyInput_first_name')
+            const modalBodyInput_age = document.getElementById('modalBodyInput_age')
+            const modalBodyInput_address = document.getElementById('modalBodyInput_address')
+            const input_ = document.getElementById('patient_hidden_input')
+            modalTitle.textContent = `${username}`
+            modalBodyInput_email.value = email
+            modalBodyInput_contact_number.value = contact_number
+            modalBodyInput_username.value = username
+            modalBodyInput_last_name.value = last_name
+            modalBodyInput_first_name.value = first_name
+            modalBodyInput_age.value = age
+            modalBodyInput_address.value = address
+            input_.value = id
+        })
+
+    </script>
+
+{% endblock %}

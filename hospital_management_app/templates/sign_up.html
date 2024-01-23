@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <body class="hold-transition login-page" style="background-color: #b9d4ec">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{% url 'login' %}"><b>Hospital </b>Management System</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <h5 class="login-box-msg" id="sign_up_as">Sign up to System</h5>
+
+                <form action="{% url 'doRegister' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email" name="email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="first_name" name="first_name">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fa fa-paper-plane"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="last_name" name="last_name">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fa fa-map-pin"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3" hidden="hidden" id="address_hid">
+                        <input type="text" class="form-control" placeholder="address" name="address">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fa fa-address-card"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="number" class="form-control" placeholder="age" name="age">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fa fa-tree"></span>
+                            </div>
+                        </div>
+                    </div>
+                    {#                    <div class="input-group mb-3">#}
+                    {#                        <input type="text" class="form-control" placeholder="username" name="username">#}
+                    {#                        <div class="input-group-append">#}
+                    {#                            <div class="input-group-text">#}
+                    {#                                <span class="fa fa-user"></span>#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="contact_number" name="contact_number">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fa fa-mobile"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password" name="password1">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Comfirm Password" name="password2">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="type" id="type_patient"
+                                           checked value="2">
+                                    <label class="form-check-label" for="type_patient">
+                                        Patient
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="type" value="3" id="type_doctor">
+                                    <label class="form-check-label" for="type_doctor">
+                                        Doctor
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                        <div class="col">
+                            <a href="{% url 'login' %}" class="btn btn-dark btn-block">Back</a>
+                        </div>
+                    </div>
+
+                    {% comment %} <div class="col-12 text-center">
+            <a href="{% url 'password_reset' %}">Reset Password</a>
+          </div>  {% endcomment %}
+
+                    {% comment %} Display Messages {% endcomment %}
+                    {% if messages %}
+                        <div class="col-12">
+                            {% for message in messages %}
+                                {% if message.tags == "error" %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                                         style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </form>
+                <!-- /.col -->
+            </div>
+
+
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+{% endblock %}
+
+
+
+{% block custom_js %}
+    <script>
+        $(document).ready(function () {
+            $('input[type=radio]').change(function () {
+                console.log(this.value)
+                if (this.value == 2) {
+                    $('#address_hid').removeAttr('hidden')
+                    $('#sign_up_as').text('Sign up as Patient')
+
+                } else if (this.value == 3) {
+                    $('#address_hid').attr('hidden', 'hidden')
+                    $('#sign_up_as').text('Sign up as Doctor')
+                }
+
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'doctor_home' %}" class="brand-link">
+        <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo"
+             class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">Hospital Database</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="{% url 'personal_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                    with font-awesome or any other icon font library -->
+
+                <li class="nav-item">
+                    {% url 'doctor_home' as doctor_home %}
+                    <a href="{{ doctor_home }}" class="nav-link {% if request.path == doctor_home %} active {% endif %}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Home
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    {% url 'profile' as profile %}
+                    <a href="{{ profile }}"
+                       class="nav-link {% if request.path == profile %} active {% endif %}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Profile
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    {% url 'appointment' as appointment %}
+                    {% url 'edit_prescription' patient_id=id as edit_prescription %}
+                    <a href="{{ appointment }}"
+                       class="nav-link {% if request.path == appointment %} active {% endif %} {% if request.path == edit_prescription %} active {% endif %}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Appointment
+                        </p>
+                    </a>
+                </li>
+
+<!--                <li class="nav-item">-->
+<!--                    {% url 'password_change' as password_change %}-->
+<!--                    <a href="{{ password_change }}"-->
+<!--                       class="nav-link {% if request.path == password_change %} active {% endif %}">-->
+<!--                        <i class="nav-icon fas fa-tachometer-alt"></i>-->
+<!--                        <p>-->
+<!--                            Password Change-->
+<!--                        </p>-->
+<!--                    </a>-->
+<!--                </li>-->
+
+<!--                <li class="nav-item">-->
+<!--                    {% url 'manage_patient' as manage_patient %}-->
+<!--                    {% url 'edit_patient' patient_id=id as edit_patient %}-->
+<!--                    <a href="{{ manage_patient }}"-->
+<!--                       class="nav-link {% if request.path == manage_patient %} active {% endif %} {% if request.path == edit_patient %} active {% endif %}">-->
+<!--                        <i class="nav-icon fas fa-chalkboard-teacher"></i>-->
+<!--                        <p>-->
+<!--                            Manage Patient-->
+<!--                        </p>-->
+<!--                    </a>-->
+<!--                </li>-->
+
+<!--                <li class="nav-item">-->
+<!--                    {% url 'add_patient' as add_patient %}-->
+<!--                    <a href="{{ add_patient }}"-->
+<!--                       class="nav-link {% if request.path == add_patient %} active {% endif %}">-->
+<!--                        <i class="nav-icon fas fa-th"></i>-->
+<!--                        <p>-->
+<!--                            Add Patient-->
+<!--                        </p>-->
+<!--                    </a>-->
+<!--                </li>-->
+
+
+<!--                <li class="nav-item">-->
+<!--                    {% url 'manage_doctor' as manage_doctor %}-->
+<!--                    {% url 'edit_doctor' doctor_id=id as  edit_doctor %}-->
+<!--                    <a href="{{ manage_doctor }}"-->
+<!--                       class="nav-link {% if request.path == manage_doctor %} active {% endif %} {% if request.path == edit_doctor %} active {% endif %}">-->
+<!--                        <i class="nav-icon fas fa-chalkboard-teacher"></i>-->
+<!--                        <p>-->
+<!--                            Manage Doctor-->
+<!--                        </p>-->
+<!--                    </a>-->
+<!--                </li>-->
+
+<!--                <li class="nav-item">-->
+<!--                    {% url 'add_doctor' as add_doctor %}-->
+<!--                    <a href="{{ add_doctor }}" class="nav-link {% if request.path == add_doctor %} active {% endif %}">-->
+<!--                        <i class="nav-icon fas fa-th"></i>-->
+<!--                        <p>-->
+<!--                            Add Doctor-->
+<!--                        </p>-->
+<!--                    </a>-->
+<!--                </li>-->
+
+<!--                <li class="nav-item">-->
+<!--                    {% url 'manage_department' as manage_department %}-->
+<!--                    {% url 'edit_department' department_id=id as edit_department %}-->
+<!--                    <a href="{{ manage_department }}"-->
+<!--                       class="nav-link {% if request.path == manage_department %} active {% endif %} {% if request.path == edit_department %} active {% endif %}">-->
+<!--                        <i class="nav-icon fas fa-chalkboard-teacher"></i>-->
+<!--                        <p>-->
+<!--                            Manage Department-->
+<!--                        </p>-->
+<!--                    </a>-->
+<!--                </li>-->
+
+<!--                <li class="nav-item">-->
+<!--                    {% url 'add_department' as add_department %}-->
+<!--                    <a href="{{ add_department }}"-->
+<!--                       class="nav-link {% if request.path == add_department %} active {% endif %}">-->
+<!--                        <i class="nav-icon fas fa-th"></i>-->
+<!--                        <p>-->
+<!--                            Add-->
+<!--                        </p>-->
+<!--                    </a>-->
+<!--                </li>-->
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

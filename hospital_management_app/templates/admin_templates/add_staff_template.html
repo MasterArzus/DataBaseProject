@@ -1,0 +1,94 @@
+{% extends 'admin_templates/base_template.html' %}
+
+{% block page_title %}
+    Add Nurse
+{% endblock page_title %}
+
+{% block main_content %}
+
+    {% load static %}
+
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Nurse</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" method="POST" action="{% url 'add_staff_save' %}">
+                            {% csrf_token %}
+
+
+                            {% comment %} Display Messages {% endcomment %}
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Nurse Name</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Enter Nurse Name"
+                                           id="id_name" >
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary " style="font-size:15px">Add Nurse
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+    {% comment %} Checking if email and username already exists or not usin Ajax {% endcomment %}
+
+    <script>
+        $(document).ready(function () {
+            // keyup event will be triggered when user leaves keyboard
+            $("#id_name").keyup(function () {
+                var name = $(this).val();
+                {#console.log("yes")#}
+                if (email != "") {
+                    $.ajax({
+                        url: '{% url 'check_name_exist' %}',
+                        type: 'POST',
+                        data: {name: name}
+                    })
+                        .done(function (response) {
+                            console.log(response);
+
+                            if (response == "True") {
+                                $(".username_error").remove();
+                                $("<span class='username_error' style='color: red; padding: 5px; font-weight: bold;'> Email Not Available. </span>").insertAfter("#id_name")
+                            } else {
+                                $(".username_error").remove();
+                                $("<span class='username_error' style='color: green; padding: 5px; font-weight: bold;'> Email Available. </span>").insertAfter("#id_name")
+                            }
+                        })
+
+                        .fail(function () {
+                            console.log("Failed");
+                        })
+                } else {
+                    $(".username_error").remove();
+                }
+
+            })
+
+
+        })
+    </script>
+
+{% endblock custom_js %}
