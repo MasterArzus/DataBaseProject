@@ -1,0 +1,66 @@
+{% extends 'admin_templates/base_template.html' %}
+
+{% block page_title %}
+    Personal Profile
+{% endblock page_title %}
+
+{% block main_content %}
+
+    {% load static %}
+
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Personal Profile</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" method="POST" action="{% url 'admin_profile_update' %}">
+                            {% csrf_token %}
+
+
+                            {% comment %} Display Messages {% endcomment %}
+
+
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Email </label>
+                                    <input type="text" class="form-control" name="email" value="{{ user.email }}"
+                                           disabled="disabled">
+                                </div>
+                                <div class="form-group">
+                                    <label>Username </label>
+                                    <input type="text" class="form-control" name="username" value="{{ user.username }}" disabled="disabled">
+                                </div>
+                                <div class="form-group">
+                                    <label>First Name </label>
+                                    <input type="text" class="form-control" name="first_name"
+                                           value="{{ user.first_name }}" disabled="disabled">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Last Name </label>
+                                    <input type="text" class="form-control" name="last_name"
+                                           value="{{ user.last_name }}"disabled="disabled">
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+
+                        </form>
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock main_content %}

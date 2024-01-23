@@ -1,0 +1,118 @@
+{% extends 'admin_templates/base_template.html' %}
+
+{% block page_title %}
+    &nbsp Manage Nurse
+{% endblock page_title %}
+
+
+{% block custom_css %}
+    <style>
+        .table tbody tr td {
+            vertical-align: middle;
+        }
+
+    </style>
+
+{% endblock %}
+
+
+{% block main_content %}
+
+    {% load static %}
+
+    <section class="content">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title" style="padding-top: 4px">Nurse Details</h4>&nbsp&nbsp
+                            <a class="btn btn-outline-primary btn-sm " href="{% url "add_staff" %}" role="button">+
+                                Add Nurse</a>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap ">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>Name</th>
+                                    <th>Operation</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for staff in staffs %}
+                                    <tr class="text-center">
+                                        <td>{{ staff.name }}</td>
+                                        <td>
+                                            <a href="{% url 'delete_staff' staff.id %}"
+                                               class="btn btn-danger">Delete</a>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                <!-- Button trigger modal -->
+
+
+                                <!-- Modal -->
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+            </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+    <script>
+
+        const exampleModal = document.getElementById('exampleModal')
+        console.log("yes")
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const username = button.getAttribute('username')
+            const email = button.getAttribute('email')
+            const contact_number = button.getAttribute('contact_number')
+            const last_name = button.getAttribute('last_name')
+            const first_name = button.getAttribute('first_name')
+            const age = button.getAttribute('age')
+            const address = button.getAttribute('address')
+            const id = button.getAttribute('patient_id')
+            // If necessary, you could initiate an AJAX request here
+            // and then do the updating in a callback.
+            //
+            // Update the modal's content.
+            const modalTitle = exampleModal.querySelector('.modal-title')
+            const modalBodyInput_email = document.getElementById('modalBodyInput_email')
+            const modalBodyInput_contact_number = document.getElementById('modalBodyInput_contact_number')
+            const modalBodyInput_username = document.getElementById('modalBodyInput_username')
+            const modalBodyInput_last_name = document.getElementById('modalBodyInput_last_name')
+            const modalBodyInput_first_name = document.getElementById('modalBodyInput_first_name')
+            const modalBodyInput_age = document.getElementById('modalBodyInput_age')
+            const modalBodyInput_address = document.getElementById('modalBodyInput_address')
+            const input_ = document.getElementById('patient_hidden_input')
+            modalTitle.textContent = `${username}`
+            modalBodyInput_email.value = email
+            modalBodyInput_contact_number.value = contact_number
+            modalBodyInput_username.value = username
+            modalBodyInput_last_name.value = last_name
+            modalBodyInput_first_name.value = first_name
+            modalBodyInput_age.value = age
+            modalBodyInput_address.value = address
+            input_.value = id
+        })
+
+    </script>
+
+{% endblock %}

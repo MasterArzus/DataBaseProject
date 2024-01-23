@@ -1,0 +1,145 @@
+{% extends 'doctor_templates/base_template.html' %}
+
+{% block page_title %}
+Home
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="profile-img">
+                    <img src="{{ doctor.profile_pic }}" style="width: 300px;height: auto" class="img-responsive" alt=""/>
+                </div>
+                <!-- Profile Image -->
+            </div>
+            <div class="col-md-9">
+                <div class="name-wrapper">
+                    <h1 class="name">{{user.username}}</h1>
+                    <h4 class="name">{{doctor.department.name}}</h4>
+                </div>
+                <div class="about-text">
+                <p>
+                    Hello, my name is {{user.username}}. I am a dedicated and compassionate doctor with a strong commitment to providing excellent healthcare services. With {{doctor.age}} years of experience in the medical field, I specialize in {{doctor.department.name}}.
+                    I understand that dealing with health issues can be stressful, and I aim to provide reassurance and support throughout the treatment process.
+                    I am proud to be part of a dedicated healthcare team, working collaboratively with other professionals to deliver comprehensive and coordinated care. My goal is to make a positive impact on the lives of my patients, helping them regain their health and improve their overall well-being.
+                    Thank you for considering me as your healthcare provider. I look forward to meeting you and providing you with exceptional medical care.
+                </p>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="personal-details">
+                            <strong>Birth: OCTOBER 17, 1996</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="personal-details">
+                            <strong>Nationalism: UNITED KINGDOM</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="personal-details">
+                            <strong>Languages: ENGLISH <span>(NATIVE)</span>, FRENCH <span>(INTERMEDIATE)</span></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section-wrapper skills-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2>Skills</h2>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="progress-wrapper">
+
+                    <div class="progress-item">
+                        <span class="progress-title">Technical Skills</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="62" aria-valuemin="0"
+                                aria-valuemax="100" style="width: 62%"><span class="progress-percent"> 62%</span>
+                            </div>
+                        </div>
+                        <!-- .progress -->
+                    </div>
+                    <!-- .skill-progress -->
+
+
+                    <div class="progress-item">
+                        <span class="progress-title">Critical Thinking Skills</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0"
+                                aria-valuemax="100" style="width: 90%"><span class="progress-percent"> 90%</span>
+                            </div>
+                        </div>
+                        <!-- /.progress -->
+                    </div>
+                    <!-- /.skill-progress -->
+
+
+                    <div class="progress-item">
+                        <span class="progress-title">Interpersonal Skills</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                                aria-valuemax="100" style="width: 75%;"><span class="progress-percent"> 75%</span>
+                            </div>
+                        </div>
+                        <!-- /.progress -->
+                    </div>
+                    <!-- /.skill-progress -->
+
+                    <div class="progress-item">
+                        <span class="progress-title">Communtcation Skills</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0"
+                                aria-valuemax="100" style="width: 55%;"><span class="progress-percent"> 55%</span>
+                            </div>
+                        </div>
+                        <!-- /.progress -->
+                    </div>
+                    <!-- /.skill-progress -->
+                    <div class="progress-item">
+                        <span class="progress-title">Professionalism</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0"
+                                aria-valuemax="100" style="width: 80%;"><span class="progress-percent"> 80%</span>
+                            </div>
+                        </div>
+                        <!-- .progress -->
+                    </div>
+                    <!-- .skill-progress -->
+
+                </div>
+                <!-- /.progress-wrapper -->
+            </div>
+        </div>
+        <!--.row -->
+    </div>
+    <!-- .container-fluid -->
+</section>
+</header>
+<!-- .header-->
+
+
+  {% endblock main_content %}
